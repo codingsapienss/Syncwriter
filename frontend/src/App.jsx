@@ -1,7 +1,11 @@
-import React from "react";
+import TextEditor from "./component/TextEditor";
 
 const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <TextEditor />
+    </div>
+  );
 };
 
 export default App;
