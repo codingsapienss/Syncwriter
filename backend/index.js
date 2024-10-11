@@ -4,7 +4,11 @@ const Document = require('./document.js')
 
 const DB_NAME = "syncwrite"
 
-mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+
+mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`).then(() => console.log('Connected to MongoDB Atlas'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
+
 
 const io = require("socket.io")(3001, {
   cors: {
@@ -33,14 +37,11 @@ io.on("connection", (socket) => {
   console.log("connetced");
 });
 
-
 async function findOrCreateDocument(id) {
-  if (id == null) return
+  if (id == null) return;
 
-  const document = await Document.findById(id)
-  if (document) {
-    return await Document.create({ _id: id, data: defaultValue })
-  }
+  let document = await Document.findById(id);
+  if (document) return document;
 
-
+  return await Document.create({ _id: id, data: defaultValue });
 }
