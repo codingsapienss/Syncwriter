@@ -10,7 +10,7 @@ mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`).then(() => console.log
 
 
 
-const io = require("socket.io")(3001, {
+const io = require("socket.io")(`${process.env.PORT || 3001}`, {
   cors: {
     origin: "http://localhost:5173",
     methods: ["GET", "POST"],
